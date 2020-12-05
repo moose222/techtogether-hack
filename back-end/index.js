@@ -21,24 +21,8 @@ app.use(express.json())
 
 app.get('/', (request, response) => {
   response.send('<h1> Hello world!</h1>')
-  
-})
-
-app.get('/experiment', (request, response) => {
-
-   const data = {
-        name: 'Los Angeles',
-        state: 'CA',
-        country: 'USA'
-      };
-      
-      // Add a new document in collection "cities" with ID 'LA'
-      db.collection('moods').doc('happy').set(data);
 
 })
-
-
- 
 
 
 

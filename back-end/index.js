@@ -1,5 +1,5 @@
 //imports the firebase database object we can use
-import db from './firebase-config'
+const db = require('./firebase-config')
 
 //imports express so you can use it
 const express = require('express')
@@ -20,7 +20,21 @@ app.use(express.json())
 // END POINTS
 
 app.get('/', (request, response) => {
-    response.send('<h1> Hello world!</h1>')
+  response.send('<h1> Hello world!</h1>')
+  
+})
+
+app.get('/experiment', (request, response) => {
+
+   const data = {
+        name: 'Los Angeles',
+        state: 'CA',
+        country: 'USA'
+      };
+      
+      // Add a new document in collection "cities" with ID 'LA'
+      db.collection('moods').doc('happy').set(data);
+
 })
 
 

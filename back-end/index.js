@@ -19,11 +19,46 @@ app.use(express.json())
 
 // END POINTS
 
-app.get('/', (request, response) => {
-  response.send('<h1> Hello world!</h1>')
+//end point 3 
+app.get('/get_song', (request, response) => {
 
+  const title = request.body.title //"song title" ex "magic shop"
+
+  try{
+
+    //Gets a song with a particular name specified by the request
+    axios.get('https://shazam.p.rapidapi.com/search', {
+      params: {
+        'term': title,
+        'limit': 1,
+      },
+      headers: {
+        'x-rapidapi-key' : 'c8936296a6msh4f298d73c33d088p1070c8jsn7b217e824682',
+        'x-rapidapi-host' : 'shazam.p.rapidapi.com',
+        'useQueryString' : true, 
+      }
+    })
+
+    //Sends the song information back to the frontend
+    .then(function(res) {
+      
+			const send_data = {
+        "title": res.data.tracks.hits[0].track.title,
+        "id": res.data.tracks.hits[0].track.key,
+        "artist": res.data.tracks.hits[0].track.subtitle,
+        "image": res.data.tracks.hits[0].track.share.image,
+        
+
+      }
+      response.json(send_data)
+    })
+    
+  } 
+  catch(error){
+    console.log(error)
+  }
+  //response.send(`<h1> This is end point 3!! </h1>`);
 })
-
 
 
 
